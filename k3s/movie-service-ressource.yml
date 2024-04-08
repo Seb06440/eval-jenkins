@@ -1,0 +1,46 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: fastapi
+ namespace: yaml
+spec:
+ selector:
+   matchLabels:
+     app: fastapi
+ template:
+   metadata:
+     labels:
+       app: fastapi
+   spec:
+    containers:
+      - name: fastapi
+        image: sebdevops06/movie-service:latest
+        imagePullPolicy: Always
+
+        ports:
+        - containerPort: 8000
+          name: fastapi-http
+        env:
+        - name: DATABASE_URI
+          value: "postgresql://movie_db_username:movie_db_password@movie_db/movie_db_dev"
+        - name: CAST_SERVICE_HOST_URL
+          value: "https://jenkins.seb-cours-datascientest.cloudns.eu/api/v1/casts/"
+---        
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: fastapi
+  name: fastapi
+  namespace: yaml
+spec:
+  selector:
+    app: fastapi
+  type: ClusterIP
+  clusterIP: 10.43.140.113
+  ports:
+  - name : fastapi-http
+    protocol: TCP
+    port: 5000
+    targetPort: 5000

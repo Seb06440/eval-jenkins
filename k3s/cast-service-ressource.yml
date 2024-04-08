@@ -1,0 +1,45 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: fastapi
+ namespace: yaml
+spec:
+ selector:
+   matchLabels:
+     app: fastapi
+ template:
+   metadata:
+     labels:
+       app: fastapi
+   spec:
+    containers:
+      - name: fastapi
+        image: sebdevops06/cast-service:latest
+        imagePullPolicy: Always
+
+        ports:
+        - containerPort: 8000
+          name: fastapi-http
+        env:
+        - name: DATABASE_URI
+          value: "postgresql://cast_db_username:cast_db_password@cast_db/cast_db_dev"
+     
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: fastapi
+  name: fastapi
+  namespace: yaml
+spec:
+  selector:
+    app: fastapi
+  type: ClusterIP
+  clusterIP: 10.43.140.113
+  ports:
+  - name : fastapi-http
+    protocol: TCP
+    port: 5000
+    targetPort: 5000
