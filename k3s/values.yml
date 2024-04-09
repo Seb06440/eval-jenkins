@@ -76,20 +76,19 @@ castService:
     postgresHost: trust
 #///////////////////////////CAST DB////////////////////////
 castDb:
-
-    image:
-      repository: postgres
-      pullPolicy: IfNotPresent
+  image:
+    repository: postgres
+    pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-      tag: "12.0-alpine"
+    tag: "12.0-alpine"
 
-    service: 
-      type: ClusterIP
-      clusterIP: 10.43.5.10
-      port: 5432
-      targetPort: 5432
-    volume:
-      hostPath: /mnt/cast-data
-      mountPath: /var/lib/postgresql/data/
+  service: 
+    type: ClusterIP
+    clusterIP: 10.43.5.10
+    port: 5432
+    targetPort: 5432
+  volume:
+    hostPath: /mnt/cast-data
+    mountPath: /var/lib/postgresql/data/
     
     
