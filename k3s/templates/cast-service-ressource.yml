@@ -2,44 +2,44 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
- name: fastapi
- namespace: yaml
+ name: {{.Release.Name }}-cast
+ #namespace: yaml
 spec:
  selector:
    matchLabels:
-     app: fastapi
+     app: {{.Release.Name }}-cast
  template:
    metadata:
      labels:
-       app: fastapi
+       app: {{.Release.Name }}-cast
    spec:
     containers:
-      - name: fastapi
-        image: sebdevops06/cast-service:latest
+      - name: {{.Release.Name }}-cast
+        image: {{.Values.castService.image.repository}}:{{.Value.castService.image.tag}}
         imagePullPolicy: Always
 
         ports:
-        - containerPort: 8000
-          name: fastapi-http
+        - containerPort: {{.Values.castService.service.port}}
+          name: cast-http
         env:
         - name: DATABASE_URI
-          value: "postgresql://cast_db_username:cast_db_password@cast_db/cast_db_dev"
+          value: "postgresql://cast_db_username:cast_db_password@"{{.Release.Name }}"-cast-db/cast_db_dev"
      
 ---
 apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: fastapi
-  name: fastapi
-  namespace: yaml
+    app: {{.Release.Name }}-cast
+  name: {{.Release.Name }}-cast
+  #namespace: yaml
 spec:
   selector:
-    app: fastapi
-  type: ClusterIP
-  clusterIP: 10.43.140.113
+    app: {{.Release.Name }}-cast
+  type: {{.Values.castService.service.type}}
+  clusterIP: {{.Values.castService.service.clusterIP}}
   ports:
-  - name : fastapi-http
+  - name : cast-http
     protocol: TCP
-    port: 5000
-    targetPort: 5000
+    port: {{.Values.castService.service.port}}
+    targetPort: {{.Values.castService.service.port}}

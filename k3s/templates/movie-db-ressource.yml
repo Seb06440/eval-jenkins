@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: pv-yaml
+  name: {{.Release.Name }}-movie-pv
   labels:
     type: local
-  namespace: yaml
+  #namespace: yaml
 spec:
   storageClassName: manual
   capacity:
@@ -12,13 +12,13 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/mnt/movie-data"
+    path: {{.Values.movieDb.volume.hostPath}}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: pvc-yaml
-  namespace: yaml
+  name: {{.Release.Name }}-movie-pvc
+  #namespace: yaml
 spec:
   accessModes:
     - ReadWriteOnce
@@ -30,35 +30,35 @@ spec:
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
- name: db
+ name: {{.Release.Name }}-movie-db
  labels:
-   app: db
- namespace: yaml
+   app: {{.Release.Name }}-movie-db
+ #namespace: yaml
 spec:
   selector:
     matchLabels:
-      app: db
-  serviceName: db
+      app: {{.Release.Name }}-movie-db
+  serviceName: {{.Release.Name }}-movie-db
   replicas: 1
   template:
    metadata:
      labels:
-       app: db
+       app: {{.Release.Name }}-movie-db
    spec:
     volumes:
-    - name: yaml-pod-storage
+    - name: movie-pod-storage
       persistentVolumeClaim:
-        claimName: pvc-yaml
+        claimName: {{.Release.Name }}-movie-pvc
     containers:
-    - name: db-container
-      image: postgres:12.0-alpine
+    - name: {{.Release.Name }}-movie-container
+      image: {{.Values.movieDb.image.repository }}:{{.Values.movieDb.image.tag }}
    
       ports:
-      - containerPort: 5432
-        name: db
+      - containerPort: {{.Values.movieDb.service.port}}
+        name: {{.Release.Name }}-movie-db
       volumeMounts:
-        - mountPath: /var/lib/postgresql/data/
-          name: yaml-pod-storage
+        - mountPath: {{.Values.movieDb.volume.mountPath}}
+          name: movie-pod-storage
       env:
       - name: POSTGRES_USER
         value: "movie_db_username"
@@ -72,15 +72,15 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: db-clusterip
-  namespace: yaml
+  name: {{.Release.Name }}-movie
+  #namespace: yaml
 spec:
   selector:
-    app: db
-  type: ClusterIP
-  clusterIP: 10.43.6.10
+    app: {{.Release.Name }}-movie-db
+  type: {{.Values.movieDb.service.type}}
+  clusterIP: {{.Values.movieDb.service.clusterIP}}
   ports:
-  - name: db
+  - name: movie-db
     protocol: TCP
-    port: 5432
-    targetPort: 5432
+    port: {{.Values.movieDb.service.port}}
+    targetPort: {{.Values.movieDb.service.port}}

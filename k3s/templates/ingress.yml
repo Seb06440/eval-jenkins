@@ -1,8 +1,8 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: jenkins-ingress
-  namespace: yaml
+  name: {{.Release.Name }}-ingress
+  #namespace: yaml
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
@@ -19,14 +19,14 @@ spec:
           pathType: Prefix
           backend:
              service:
-              name: cast-service
+              name: {{.Release.Name }}-cast
               port:
-                number: 8000
+                number: {{.Values.castService.service.port}}
       paths:
         - path: /api/v1/movie/
           pathType: Prefix
           backend:
              service:
-              name: movie-service
+              name: {{.Release.Name }}-movie
               port:
-                number: 8000
+                number: {{.Values.movieService.service.port}}

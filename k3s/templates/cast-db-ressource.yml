@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: pv-yaml
+  name: {{.Release.Name }}-cast-pv
   labels:
     type: local
-  namespace: yaml
+ #namespace: yaml
 spec:
   storageClassName: manual
   capacity:
@@ -12,13 +12,13 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/mnt/cast-data"
+    path: {{.Values.castDb.voulume.hostPath}}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: pvc-yaml
-  namespace: yaml
+  name: {{.Release.Name }}-cast-pvc
+  #namespace: yaml
 spec:
   accessModes:
     - ReadWriteOnce
@@ -30,35 +30,35 @@ spec:
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
- name: db
+ name: {{.Release.Name }}-cast-db
  labels:
-   app: db
- namespace: yaml
+   app: {{.Release.Name }}-cast-db
+ #namespace: yaml
 spec:
   selector:
     matchLabels:
-      app: db
-  serviceName: db
+      app: {{.Release.Name }}-cast-db
+  serviceName: {{.Release.Name }}-cast-db
   replicas: 1
   template:
    metadata:
      labels:
-       app: db
+       app: {{.Release.Name }}-cast-db
    spec:
     volumes:
-    - name: yaml-pod-storage
+    - name: {{.Release.Name }}-cast-storage
       persistentVolumeClaim:
-        claimName: pvc-yaml
+        claimName: {{.Release.Name }}-cast-pvc
     containers:
     - name: db-container
-      image: postgres:12.0-alpine
+      image: {{Values.castDb.image.repository}}:{{Values.castDb.image.tag}}
    
       ports:
-      - containerPort: 5432
-        name: db
+      - containerPort: {{.Values.castDb.service.port}}
+        name: {{.Release.Name }}-cast-db
       volumeMounts:
         - mountPath: /var/lib/postgresql/data/
-          name: yaml-pod-storage
+          name: {{.Release.Name }}-cast-storage
       env:
       - name: POSTGRES_USER
         value: "cast_db_username"
@@ -72,15 +72,14 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: db-clusterip
-  namespace: yaml
+  name: {{.Release.Name }}-cast-db
+  #namespace: yaml
 spec:
   selector:
-    app: db
-  type: ClusterIP
-  clusterIP: 10.43.5.10
-  ports:
-  - name: db
+    app: {{.Release.Name }}-cast-db
+  type: {{.Values.castDb.service.type}}
+  clusterIP: {{.Values.castDb.service.type}}
+  - name: {{.Release.Name }}-cast-db
     protocol: TCP
-    port: 5432
-    targetPort: 5432
+    port: {{.Values.castDb.service.port}}
+    targetPort: {{.Values.castDb.service.port}}

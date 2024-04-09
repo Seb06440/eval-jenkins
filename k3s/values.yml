@@ -4,22 +4,19 @@
 
 
 namespace: helm
-#///////////////////////////FAST API////////////////////////
-fastapi:
-  minReplicas: 3
-  maxReplicas: 6
-  targetCPU: 70
-
+#///////////////////////////MOVIE SERVICE////////////////////////
+movieService:
+ 
   image:
-    repository: sebdevops06/fastapik3s
+    repository: sebdevops06/movie-service
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
     tag: "latest"
 
   service:
     type: ClusterIP
-    port: 5000
-    targetPort: 5000
+    port: 8000
+    targetPort: 8000
     clusterIP: 10.43.140.113
 
   ingress:
@@ -28,47 +25,45 @@ fastapi:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
     rules:
-      host: app1.seb-cours-datascientest.cloudns.eu
+      host: jenkins.seb-cours-datascientest.cloudns.eu
       paths:
         path: /users
         pathType: Prefix
       port: 5000
     tls: 
       secretName: fastapi-secret
-      hosts: app1.seb-cours-datascientest.cloudns.eu
-#///////////////////////////PG ADMIN////////////////////////
-pgadmin:
-  replicaCount: 1
+      hosts: jenkins.seb-cours-datascientest.cloudns.eu
+#///////////////////////////<MOVIE DB////////////////////////
+movieDb:
 
-  image:
-    repository: dpage/pgadmin4
-    pullPolicy: IfNotPresent
-    # Overrides the image tag whose default is the chart appVersion.
-    tag: "latest"
-  
-  service: 
-    type: NodePort
-    port: 80
-    targetPort: 80
-    nodePort: 30000
-
-  env:
-    pgAdminEmail: admin@admin.com
-    pgAdminPass: root
-#///////////////////////////POSTGRES////////////////////////
-postgres:
-  replicaCount: 1
   image:
     repository: postgres
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "12.0-alpine"
+    tag: 12.0-alpine
+  
+  service: 
+    type: ClusterIP
+    port: 5432
+    targetPort: 5432
+    clusterIP: 10.43.140.113
+ volume:
+    hostPath: /mnt/movie-data
+    mountPath: /var/lib/postgresql/data/
+  
+#///////////////////////////CAST SERVICE////////////////////////
+castService:
+  image:
+    repository: sebdevops06/cast-service
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: "latest"
 
   service: 
     type: ClusterIP
     clusterIP: 10.43.5.10
-    port: 5432
-    targetPort: 5432
+    port: 8000
+    targetPort: 8000
   
   volume:
     hostPath: /mnt/data
@@ -79,3 +74,26 @@ postgres:
     postgresPass: password
     postgresDB: storedb
     postgresHost: trust
+#///////////////////////////CAST DB////////////////////////
+castDb:
+
+    image:
+      repository: postgres
+      pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+      tag: "12.0-alpine"
+
+    service: 
+      type: ClusterIP
+      clusterIP: 10.43.5.10
+      port: 5432
+      targetPort: 5432
+    volume:
+      hostPath: /mnt/cast-data
+      mountPath: /var/lib/postgresql/data/
+    
+    env: 
+      postgresUser: admin
+      postgresPass: password
+      postgresDB: storedb
+      postgresHost: trust
