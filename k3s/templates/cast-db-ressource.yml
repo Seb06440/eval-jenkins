@@ -54,7 +54,7 @@ spec:
    
       ports:
       - containerPort: {{.Values.castDb.service.port}}
-        name: {{.Release.Name }}{{.Release.Namespace }}-cast-db
+        name: {{.Release.Namespace }}-cast-db
       volumeMounts:
         - mountPath: /var/lib/postgresql/data/
           name: {{.Release.Name }}{{.Release.Namespace }}-cast-storage
@@ -79,7 +79,7 @@ spec:
   type: {{.Values.castDb.service.type}}
   #clusterIP: {{.Values.castDb.service.clusterIP}}
   ports:
-  - name: {{.Release.Name }}{{.Release.Namespace }}-cast-db
+  - name: {{.Release.Namespace }}-cast-db
     protocol: TCP
     port: {{.Values.castDb.service.port}}
     targetPort: {{.Values.castDb.service.port}}

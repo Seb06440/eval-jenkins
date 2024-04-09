@@ -55,7 +55,7 @@ spec:
    
       ports:
       - containerPort: {{.Values.movieDb.service.port}}
-        name: {{.Release.Name }}{{.Release.Namespace }}-movie-db
+        name: movie-db
       volumeMounts:
         - mountPath: {{.Values.movieDb.volume.mountPath}}
           name: movie-pod-storage
