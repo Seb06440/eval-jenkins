@@ -37,7 +37,7 @@ movieService:
 movieDb:
 
   image:
-    repository: postgres
+    repository: postgres:12.0-alpine
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
     tag: 12.0-alpine
@@ -77,10 +77,10 @@ castService:
 #///////////////////////////CAST DB////////////////////////
 castDb:
   image:
-    repository: postgres
+    repository: postgres:12.0-alpine
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "12.0-alpine"
+    tag: 12.0-alpine
 
   service: 
     type: ClusterIP
