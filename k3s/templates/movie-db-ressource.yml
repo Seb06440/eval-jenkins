@@ -52,7 +52,8 @@ spec:
     containers:
     - name: {{.Release.Name }}{{.Release.Namespace }}-movie
       image: {{.Values.movieDb.image.repository }}
-   
+      imagePullPolicy: Always
+      
       ports:
       - containerPort: {{.Values.movieDb.service.port}}
         name: movie-db

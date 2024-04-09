@@ -51,7 +51,8 @@ spec:
     containers:
     - name: {{.Release.Name }}{{.Release.Namespace }}-db
       image: {{.Values.castDb.image.repository}}
-   
+      imagePullPolicy: Always
+      
       ports:
       - containerPort: {{.Values.castDb.service.port}}
         name: {{.Release.Namespace }}-cast-db
