@@ -38,7 +38,7 @@ spec:
   selector:
     app: {{.Release.Name }}-movie
   type: {{.Values.movieService.service.type }}
-  clusterIP: {{.Values.movieService.service.clusterIP }}
+  #clusterIP: {{.Values.movieService.service.clusterIP }}
   ports:
   - name : {{.Release.Name }}-movie
     protocol: TCP

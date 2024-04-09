@@ -37,7 +37,7 @@ spec:
   selector:
     app: {{.Release.Name }}-cast
   type: {{.Values.castService.service.type}}
-  clusterIP: {{.Values.castService.service.clusterIP}}
+  #clusterIP: {{.Values.castService.service.clusterIP}}
   ports:
   - name : cast-http
     protocol: TCP
