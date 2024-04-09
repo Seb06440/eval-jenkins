@@ -47,7 +47,7 @@ movieDb:
     port: 5432
     targetPort: 5432
     clusterIP: 10.43.140.113
- volume:
+  volume:
     hostPath: /mnt/movie-data
     mountPath: /var/lib/postgresql/data/
   
@@ -92,8 +92,4 @@ castDb:
       hostPath: /mnt/cast-data
       mountPath: /var/lib/postgresql/data/
     
-    env: 
-      postgresUser: admin
-      postgresPass: password
-      postgresDB: storedb
-      postgresHost: trust
+    
