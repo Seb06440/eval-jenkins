@@ -77,7 +77,7 @@ spec:
   selector:
     app: {{.Release.Name }}-cast-db
   type: {{.Values.castDb.service.type}}
-  clusterIP: {{.Values.castDb.service.clusterIP}}
+  #clusterIP: {{.Values.castDb.service.clusterIP}}
   ports:
   - name: {{.Release.Name }}-cast-db
     protocol: TCP

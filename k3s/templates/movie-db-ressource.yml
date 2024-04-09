@@ -78,7 +78,7 @@ spec:
   selector:
     app: {{.Release.Name }}-movie-db
   type: {{.Values.movieDb.service.type}}
-  clusterIP: {{.Values.movieDb.service.clusterIP}}
+  #clusterIP: {{.Values.movieDb.service.clusterIP}}
   ports:
   - name: movie-db
     protocol: TCP
