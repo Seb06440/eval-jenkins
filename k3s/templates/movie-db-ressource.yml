@@ -50,7 +50,7 @@ spec:
       persistentVolumeClaim:
         claimName: {{.Release.Name }}{{.Release.Namespace }}-movie-pvc
     containers:
-    - name: {{.Release.Name }}{{.Release.Namespace }}-movie-container
+    - name: {{.Release.Name }}{{.Release.Namespace }}-movie
       image: {{.Values.movieDb.image.repository }}
    
       ports:

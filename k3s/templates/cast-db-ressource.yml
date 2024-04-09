@@ -49,7 +49,7 @@ spec:
       persistentVolumeClaim:
         claimName: {{.Release.Name }}{{.Release.Namespace }}-cast-pvc
     containers:
-    - name: db-container
+    - name: {{.Release.Name }}{{.Release.Namespace }}-db
       image: {{.Values.castDb.image.repository}}
    
       ports:
