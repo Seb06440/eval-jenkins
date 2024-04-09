@@ -69,11 +69,7 @@ castService:
     hostPath: /mnt/data
     mountPath: /var/lib/postgresql/data/
     
-  env: 
-    postgresUser: admin
-    postgresPass: password
-    postgresDB: storedb
-    postgresHost: trust
+  
 #///////////////////////////CAST DB////////////////////////
 castDb:
   image:

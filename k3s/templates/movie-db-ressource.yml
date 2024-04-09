@@ -53,7 +53,7 @@ spec:
     - name: {{.Release.Name }}{{.Release.Namespace }}-movie
       image: {{.Values.movieDb.image.repository }}
       imagePullPolicy: Always
-      
+
       ports:
       - containerPort: {{.Values.movieDb.service.port}}
         name: movie-db
@@ -62,13 +62,13 @@ spec:
           name: movie-pod-storage
       env:
       - name: POSTGRES_USER
-        value: "movie_db_username"
+        value: movie_db_username
       - name: POSTGRES_PASSWORD
-        value: "movie_db_password"
+        value: movie_db_password
       - name: POSTGRES_DB
-        value: "movie_db_dev"
+        value: movie_db_dev
       - name: POSTGRES_HOST_AUTH_METHOD
-        value: "trust"
+        value: trust
 ---
 apiVersion: v1
 kind: Service

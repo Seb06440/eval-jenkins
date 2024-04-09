@@ -52,7 +52,7 @@ spec:
     - name: {{.Release.Name }}{{.Release.Namespace }}-db
       image: {{.Values.castDb.image.repository}}
       imagePullPolicy: Always
-      
+
       ports:
       - containerPort: {{.Values.castDb.service.port}}
         name: {{.Release.Namespace }}-cast-db
@@ -61,13 +61,13 @@ spec:
           name: {{.Release.Name }}{{.Release.Namespace }}-cast-storage
       env:
       - name: POSTGRES_USER
-        value: "cast_db_username"
+        value: cast_db_username
       - name: POSTGRES_PASSWORD
-        value: "cast_db_password"
+        value: cast_db_password
       - name: POSTGRES_DB
-        value: "cast_db_dev"
+        value: cast_db_dev
       - name: POSTGRES_HOST_AUTH_METHOD
-        value: "trust"
+        value: trust
 ---
 apiVersion: v1
 kind: Service
