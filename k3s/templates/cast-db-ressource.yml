@@ -16,7 +16,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{.Release.Name }}-cast-pvc
+  name: {{.Release.Name }}{{.Release.Namespace }}-cast-pvc
   #namespace: yaml
 spec:
   accessModes:
@@ -29,35 +29,35 @@ spec:
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
- name: {{.Release.Name }}-cast-db
+ name: {{.Release.Name }}{{.Release.Namespace }}-cast-db
  labels:
-   app: {{.Release.Name }}-cast-db
+   app: {{.Release.Name }}{{.Release.Namespace }}-cast-db
  #namespace: yaml
 spec:
   selector:
     matchLabels:
-      app: {{.Release.Name }}-cast-db
-  serviceName: {{.Release.Name }}-cast-db
+      app: {{.Release.Name }}{{.Release.Namespace }}-cast-db
+  serviceName: {{.Release.Name }}{{.Release.Namespace }}-cast-db
   replicas: 1
   template:
    metadata:
      labels:
-       app: {{.Release.Name }}-cast-db
+       app: {{.Release.Name }}{{.Release.Namespace }}-cast-db
    spec:
     volumes:
-    - name: {{.Release.Name }}-cast-storage
+    - name: {{.Release.Name }}{{.Release.Namespace }}-cast-storage
       persistentVolumeClaim:
-        claimName: {{.Release.Name }}-cast-pvc
+        claimName: {{.Release.Name }}{{.Release.Namespace }}-cast-pvc
     containers:
     - name: db-container
       image: {{.Values.castDb.image.repository}}:{{.Values.castDb.image.tag}}
    
       ports:
       - containerPort: {{.Values.castDb.service.port}}
-        name: {{.Release.Name }}-cast-db
+        name: {{.Release.Name }}{{.Release.Namespace }}-cast-db
       volumeMounts:
         - mountPath: /var/lib/postgresql/data/
-          name: {{.Release.Name }}-cast-storage
+          name: {{.Release.Name }}{{.Release.Namespace }}-cast-storage
       env:
       - name: POSTGRES_USER
         value: "cast_db_username"
@@ -71,15 +71,15 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{.Release.Name }}-cast-db
+  name: {{.Release.Name }}{{.Release.Namespace }}-cast-db
   #namespace: yaml
 spec:
   selector:
-    app: {{.Release.Name }}-cast-db
+    app: {{.Release.Name }}{{.Release.Namespace }}-cast-db
   type: {{.Values.castDb.service.type}}
   #clusterIP: {{.Values.castDb.service.clusterIP}}
   ports:
-  - name: {{.Release.Name }}-cast-db
+  - name: {{.Release.Name }}{{.Release.Namespace }}-cast-db
     protocol: TCP
     port: {{.Values.castDb.service.port}}
     targetPort: {{.Values.castDb.service.port}}

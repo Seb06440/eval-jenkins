@@ -17,7 +17,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{.Release.Name }}-movie-pvc
+  name: {{.Release.Name }}{{.Release.Namespace }}-movie-pvc
   #namespace: yaml
 spec:
   accessModes:
@@ -30,32 +30,32 @@ spec:
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
- name: {{.Release.Name }}-movie-db
+ name: {{.Release.Name }}{{.Release.Namespace }}-movie-db
  labels:
-   app: {{.Release.Name }}-movie-db
+   app: {{.Release.Name }}{{.Release.Namespace }}-movie-db
  #namespace: yaml
 spec:
   selector:
     matchLabels:
-      app: {{.Release.Name }}-movie-db
-  serviceName: {{.Release.Name }}-movie-db
+      app: {{.Release.Name }}{{.Release.Namespace }}-movie-db
+  serviceName: {{.Release.Name }}{{.Release.Namespace }}-movie-db
   replicas: 1
   template:
    metadata:
      labels:
-       app: {{.Release.Name }}-movie-db
+       app: {{.Release.Name }}{{.Release.Namespace }}-movie-db
    spec:
     volumes:
     - name: movie-pod-storage
       persistentVolumeClaim:
-        claimName: {{.Release.Name }}-movie-pvc
+        claimName: {{.Release.Name }}{{.Release.Namespace }}-movie-pvc
     containers:
-    - name: {{.Release.Name }}-movie-container
+    - name: {{.Release.Name }}{{.Release.Namespace }}-movie-container
       image: {{.Values.movieDb.image.repository }}:{{.Values.movieDb.image.tag }}
    
       ports:
       - containerPort: {{.Values.movieDb.service.port}}
-        name: {{.Release.Name }}-movie-db
+        name: {{.Release.Name }}{{.Release.Namespace }}-movie-db
       volumeMounts:
         - mountPath: {{.Values.movieDb.volume.mountPath}}
           name: movie-pod-storage
@@ -72,11 +72,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{.Release.Name }}-movie
+  name: {{.Release.Name }}{{.Release.Namespace }}-movie
   #namespace: yaml
 spec:
   selector:
-    app: {{.Release.Name }}-movie-db
+    app: {{.Release.Name }}{{.Release.Namespace }}-movie-db
   type: {{.Values.movieDb.service.type}}
   #clusterIP: {{.Values.movieDb.service.clusterIP}}
   ports:

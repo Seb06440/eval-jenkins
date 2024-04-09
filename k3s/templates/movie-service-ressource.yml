@@ -2,25 +2,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
- name: {{.Release.Name }}-movie
+ name: {{.Release.Name }}{{.Release.Namespace }}-movie
  #namespace: yaml
 spec:
  selector:
    matchLabels:
-     app: {{.Release.Name }}-movie
+     app: {{.Release.Name }}{{.Release.Namespace }}-movie
  template:
    metadata:
      labels:
-       app: {{.Release.Name }}-movie
+       app: {{.Release.Name }}{{.Release.Namespace }}-movie
    spec:
     containers:
-      - name: {{.Release.Name }}-movie
+      - name: {{.Release.Name }}{{.Release.Namespace }}-movie
         image: {{.Values.movieService.image.repository }}:{{.Values.movieService.image.tag}}
         imagePullPolicy: Always
 
         ports:
         - containerPort: {{.Values.movieService.service.port }}
-          name: {{.Release.Name }}-movie
+          name: {{.Release.Name }}{{.Release.Namespace }}-movie
         env:
         - name: DATABASE_URI
           value: "postgresql://movie_db_username:movie_db_password@movie_db/movie_db_dev"
@@ -31,16 +31,16 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: {{.Release.Name }}-movie
-  name: {{.Release.Name }}-movie
+    app: {{.Release.Name }}{{.Release.Namespace }}-movie
+  name: {{.Release.Name }}{{.Release.Namespace }}-movie
   #namespace: yaml
 spec:
   selector:
-    app: {{.Release.Name }}-movie
+    app: {{.Release.Name }}{{.Release.Namespace }}-movie
   type: {{.Values.movieService.service.type }}
   #clusterIP: {{.Values.movieService.service.clusterIP }}
   ports:
-  - name : {{.Release.Name }}-movie
+  - name : {{.Release.Name }}{{.Release.Namespace }}-movie
     protocol: TCP
     port: {{.Values.movieService.service.port }}
     targetPort: {{.Values.movieService.service.port }}
