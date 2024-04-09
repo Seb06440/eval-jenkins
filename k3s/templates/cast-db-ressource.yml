@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: {{.Release.Name }}-cast-pv
+  name: {{.Release.Name }}{{.Release.Namespace }}-cast-pv
   labels:
     type: local
 spec:
