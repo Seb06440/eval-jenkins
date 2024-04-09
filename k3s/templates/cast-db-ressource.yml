@@ -51,7 +51,7 @@ spec:
         claimName: {{.Release.Name }}-cast-pvc
     containers:
     - name: db-container
-      image: {{Values.castDb.image.repository}}:{{Values.castDb.image.tag}}
+      image: {{.Values.castDb.image.repository}}:{{.Values.castDb.image.tag}}
    
       ports:
       - containerPort: {{.Values.castDb.service.port}}
