@@ -19,7 +19,7 @@ spec:
           pathType: Prefix
           backend:
              service:
-              name: app{{.Release.Namespace }}-cast
+              name: {{.Release.Name }}{{.Release.Namespace }}-cast
               port:
                 number: {{.Values.castService.service.port}}
       paths:
@@ -27,6 +27,6 @@ spec:
           pathType: Prefix
           backend:
              service:
-              name: app{{.Release.Namespace }}-movie
+              name: {{.Release.Name }}{{.Release.Namespace }}-movie
               port:
                 number: {{.Values.movieService.service.port}}

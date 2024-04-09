@@ -35,7 +35,7 @@ metadata:
   #namespace: yaml
 spec:
   selector:
-    app: {{.Release.Name }}-cast
+    app: {{.Release.Name }}{{.Release.Namespace }}-cast
   type: {{.Values.castService.service.type}}
   #clusterIP: {{.Values.castService.service.clusterIP}}
   ports:
