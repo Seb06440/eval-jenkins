@@ -15,7 +15,7 @@ spec:
    spec:
     containers:
       - name: {{.Release.Name }}-cast
-        image: {{.Values.castService.image.repository}}:{{.Value.castService.image.tag}}
+        image: {{.Values.castService.image.repository}}:{{.Values.castService.image.tag}}
         imagePullPolicy: Always
 
         ports:
