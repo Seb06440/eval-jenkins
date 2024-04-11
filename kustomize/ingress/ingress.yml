@@ -16,7 +16,7 @@ spec:
   - host: jenkins.seb-cours-datascientest.cloudns.eu
     http:
       paths:
-        - path: /api/v1/casts/
+        - path: /api/v1/casts
           pathType: Prefix
           backend:
              service:
@@ -24,7 +24,7 @@ spec:
               port:
                 number: {{.Values.castService.service.port}}
       paths:
-        - path: /api/v1/movie/
+        - path: /api/v1/movie
           pathType: Prefix
           backend:
              service:
