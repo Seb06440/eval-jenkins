@@ -50,7 +50,7 @@ spec:
         claimName: {{.Release.Name }}{{.Release.Namespace }}-cast-pvc
     containers:
     - name: {{.Release.Name }}{{.Release.Namespace }}-db
-      image: postgres:12.0-alpine
+      image: {{.Values.movieDb.image.repository}}:{{.Values.movieDb.image.tag}}
       imagePullPolicy: Always
 
       ports:
