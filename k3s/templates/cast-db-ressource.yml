@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: {{.Release.Name }}{{.Release.Namespace }}-cast-pv
+  name: {{.Release.Namespace }}-cast-pv
   labels:
     type: local
 spec:
@@ -16,7 +16,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{.Release.Name }}{{.Release.Namespace }}-cast-pvc
+  name: {{.Release.Namespace }}-cast-pvc
   #namespace: yaml
 spec:
   accessModes:
@@ -29,27 +29,27 @@ spec:
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
- name: {{.Release.Name }}{{.Release.Namespace }}-cast-db
+ name: {{.Release.Namespace }}-cast-db
  labels:
-   app: {{.Release.Name }}{{.Release.Namespace }}-cast-db
+   app: {{.Release.Namespace }}-cast-db
  #namespace: yaml
 spec:
   selector:
     matchLabels:
-      app: {{.Release.Name }}{{.Release.Namespace }}-cast-db
-  serviceName: {{.Release.Name }}{{.Release.Namespace }}-cast-db
+      app: {{.Release.Namespace }}-cast-db
+  serviceName: {{.Release.Namespace }}-cast-db
   replicas: 1
   template:
    metadata:
      labels:
-       app: {{.Release.Name }}{{.Release.Namespace }}-cast-db
+       app: {{.Release.Namespace }}-cast-db
    spec:
     volumes:
-    - name: {{.Release.Name }}{{.Release.Namespace }}-cast-storage
+    - name: {{.Release.Namespace }}-cast-storage
       persistentVolumeClaim:
-        claimName: {{.Release.Name }}{{.Release.Namespace }}-cast-pvc
+        claimName: {{.Release.Namespace }}-cast-pvc
     containers:
-    - name: {{.Release.Name }}{{.Release.Namespace }}-db
+    - name: {{.Release.Namespace }}-db
       image: {{.Values.movieDb.image.repository}}:{{.Values.movieDb.image.tag}}
       imagePullPolicy: Always
 
@@ -58,7 +58,7 @@ spec:
         name: {{.Release.Namespace }}-cast-db
       volumeMounts:
         - mountPath: /var/lib/postgresql/data/
-          name: {{.Release.Name }}{{.Release.Namespace }}-cast-storage
+          name: {{.Release.Namespace }}-cast-storage
       env:
       - name: POSTGRES_USER
         value: admin
@@ -71,11 +71,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{.Release.Name }}{{.Release.Namespace }}-cast-db
+  name: {{.Release.Namespace }}-cast-db
   #namespace: yaml
 spec:
   selector:
-    app: {{.Release.Name }}{{.Release.Namespace }}-cast-db
+    app: {{.Release.Namespace }}-cast-db
   type: {{.Values.castDb.service.type}}
   #clusterIP: {{.Values.castDb.service.clusterIP}}
   ports:

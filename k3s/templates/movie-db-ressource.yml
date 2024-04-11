@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: {{.Release.Name }}{{.Release.Namespace }}-movie-pv
+  name: {{.Release.Namespace }}-movie-pv
   labels:
     type: local
   #namespace: yaml
@@ -17,7 +17,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{.Release.Name }}{{.Release.Namespace }}-movie-pvc
+  name: {{.Release.Namespace }}-movie-pvc
   #namespace: yaml
 spec:
   accessModes:
@@ -30,36 +30,35 @@ spec:
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
- name: {{.Release.Name }}{{.Release.Namespace }}-movie-db
+ name: {{.Release.Namespace }}-movie-db
  labels:
-   app: {{.Release.Name }}{{.Release.Namespace }}-movie-db
+   app: {{.Release.Namespace }}-movie-db
  #namespace: yaml
 spec:
   selector:
     matchLabels:
-      app: {{.Release.Name }}{{.Release.Namespace }}-movie-db
-  serviceName: {{.Release.Name }}{{.Release.Namespace }}-movie-db
+      app: {{.Release.Namespace }}-movie-db
+  serviceName: {{.Release.Namespace }}-movie-db
   replicas: 1
   template:
    metadata:
      labels:
-       app: {{.Release.Name }}{{.Release.Namespace }}-movie-db
+       app: {{.Release.Namespace }}-movie-db
    spec:
     volumes:
-    - name: {{.Release.Name }}{{.Release.Namespace }}-movie-pod-storage
+    - name: {{.Release.Namespace }}-movie-pod-storage
       persistentVolumeClaim:
-        claimName: {{.Release.Name }}{{.Release.Namespace }}-movie-pvc
+        claimName: {{.Release.Namespace }}-movie-pvc
     containers:
-    - name: {{.Release.Name }}{{.Release.Namespace }}-movie
+    - name: {{.Release.Namespace }}-movie-container
       image: {{.Values.movieDb.image.repository}}:{{.Values.movieDb.image.tag}}
-      imagePullPolicy: Always
-
+      
       ports:
       - containerPort: {{.Values.movieDb.service.port}}
         name: {{.Release.Namespace }}movie-db
       volumeMounts:
         - mountPath: {{.Values.movieDb.volume.mountPath}}
-          name: {{.Release.Name }}{{.Release.Namespace }}-movie-pod-storage
+          name: {{.Release.Namespace }}-movie-pod-storage
       env:
       - name: POSTGRES_USER
         value: admin
