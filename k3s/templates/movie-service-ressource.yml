@@ -23,7 +23,7 @@ spec:
           name: {{.Release.Namespace }}-movie
         env:
         - name: DATABASE_URI
-          value: "postgresql://admin:root@{{.Release.Name }}{{.Release.Namespace }}-movie-db/movie_db_{{.Release.Namespace }}"
+          value: postgresql://admin:root@{{.Release.Name }}{{.Release.Namespace }}-movie-db/movie_db_{{.Release.Namespace }}
         - name: CAST_SERVICE_HOST_URL
           value: "https://jenkins.seb-cours-datascientest.cloudns.eu/api/v1/casts/"
 ---        
