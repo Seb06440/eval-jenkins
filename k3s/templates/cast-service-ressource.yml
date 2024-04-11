@@ -23,7 +23,7 @@ spec:
           name: cast-http
         env:
         - name: DATABASE_URI
-          value: postgresql://cast_db_username:cast_db_password@{{.Release.Name }}{{.Release.Namespace }}-cast-db/cast_db_dev
+          value: postgresql://admin:root@{{.Release.Name }}{{.Release.Namespace }}-cast-db/castdb{{.Release.Namespace }}
      
 ---
 apiVersion: v1

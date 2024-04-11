@@ -65,7 +65,7 @@ spec:
       - name: POSTGRES_PASSWORD
         value: root
       - name: POSTGRES_DB
-        value: cast_db_{{.Release.Namespace }}
+        value: castdb{{.Release.Namespace }}
       
 ---
 apiVersion: v1
