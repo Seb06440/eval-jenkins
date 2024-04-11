@@ -2,19 +2,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
- name: {{.Release.Name }}{{.Release.Namespace }}-cast
+ name: {{.Release.Namespace }}-cast
  #namespace: yaml
 spec:
  selector:
    matchLabels:
-     app: {{.Release.Name }}{{.Release.Namespace }}-cast
+     app: {{.Release.Namespace }}-cast
  template:
    metadata:
      labels:
-       app: {{.Release.Name }}{{.Release.Namespace }}-cast
+       app: {{.Release.Namespace }}-cast
    spec:
     containers:
-      - name: {{.Release.Name }}{{.Release.Namespace }}-cast
+      - name: {{.Release.Namespace }}-cast
         image: {{.Values.castService.image.repository}}:{{.Values.castService.image.tag}}
         imagePullPolicy: Always
 
@@ -23,19 +23,19 @@ spec:
           name: cast-http
         env:
         - name: DATABASE_URI
-          value: postgresql://admin:root@{{.Release.Name }}{{.Release.Namespace }}-cast-db/castdb{{.Release.Namespace }}
+          value: postgresql://admin:root@{{.Release.Namespace }}-cast-db/castdb{{.Release.Namespace }}
      
 ---
 apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: {{.Release.Name }}{{.Release.Namespace }}-cast
-  name: {{.Release.Name }}{{.Release.Namespace }}-cast
+    app: {{.Release.Namespace }}-cast
+  name: {{.Release.Namespace }}-cast
   #namespace: yaml
 spec:
   selector:
-    app: {{.Release.Name }}{{.Release.Namespace }}-cast
+    app: {{.Release.Namespace }}-cast
   type: {{.Values.castService.service.type}}
   #clusterIP: {{.Values.castService.service.clusterIP}}
   ports:

@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{.Release.Name }}{{.Release.Namespace }}-ingress
+  name: {{.Release.Namespace }}-ingress
   #namespace: yaml
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
@@ -20,7 +20,7 @@ spec:
           pathType: Prefix
           backend:
              service:
-              name: {{.Release.Name }}{{.Release.Namespace }}-cast
+              name: {{.Release.Namespace }}-cast
               port:
                 number: {{.Values.castService.service.port}}
       paths:
@@ -28,6 +28,6 @@ spec:
           pathType: Prefix
           backend:
              service:
-              name: {{.Release.Name }}{{.Release.Namespace }}-movie
+              name: {{.Release.Namespace }}-movie
               port:
                 number: {{.Values.movieService.service.port}}
