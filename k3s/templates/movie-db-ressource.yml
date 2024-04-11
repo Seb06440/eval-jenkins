@@ -8,7 +8,7 @@ metadata:
 spec:
   storageClassName: manual
   capacity:
-    storage: 10Gi
+    storage: 20Gi
   accessModes:
     - ReadWriteOnce
   hostPath:
@@ -25,7 +25,7 @@ spec:
   storageClassName: manual
   resources:
     requests:
-      storage: 2Gi
+      storage: 10Gi
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -46,7 +46,7 @@ spec:
        app: {{.Release.Name }}{{.Release.Namespace }}-movie-db
    spec:
     volumes:
-    - name: movie-pod-storage
+    - name: {{.Release.Name }}{{.Release.Namespace }}-movie-pod-storage
       persistentVolumeClaim:
         claimName: {{.Release.Name }}{{.Release.Namespace }}-movie-pvc
     containers:
@@ -56,10 +56,10 @@ spec:
 
       ports:
       - containerPort: {{.Values.movieDb.service.port}}
-        name: movie-db
+        name: {{.Release.Namespace }}movie-db
       volumeMounts:
         - mountPath: {{.Values.movieDb.volume.mountPath}}
-          name: movie-pod-storage
+          name: {{.Release.Name }}{{.Release.Namespace }}-movie-pod-storage
       env:
       - name: POSTGRES_USER
         value: movie_db_username
@@ -81,7 +81,7 @@ spec:
   type: {{.Values.movieDb.service.type}}
   #clusterIP: {{.Values.movieDb.service.clusterIP}}
   ports:
-  - name: movie-db
+  - name: {{.Release.Namespace }}-movie-db
     protocol: TCP
     port: {{.Values.movieDb.service.port}}
     targetPort: {{.Values.movieDb.service.port}}
