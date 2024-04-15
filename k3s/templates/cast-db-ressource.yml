@@ -62,8 +62,8 @@ spec:
         claimName: {{.Release.Namespace }}-cast-pvc
     containers:
     - name: {{.Release.Namespace }}-cast-db
-      image: {{.Values.movieDb.image.repository}}:{{.Values.movieDb.image.tag}}
-      imagePullPolicy: Always
+      image: {{.Values.castDb.image.repository}}:{{.Values.castDb.image.tag}}
+      imagePullPolicy: IfNotPresent
       envFrom:
       - configMapRef:
           name: {{.Release.Namespace }}-cast-db-config

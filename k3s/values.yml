@@ -88,7 +88,7 @@ castDb:
     mountPath: /var/lib/postgresql/data/
     
 env:
-  user: admin
+  user: postgresuser
   password: password
   moviedb: moviedb{{.Release.Namespace }}
   castdb: castdb{{.Release.Namespace }}
