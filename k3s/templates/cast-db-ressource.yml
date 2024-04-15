@@ -76,7 +76,7 @@ metadata:
 spec:
   selector:
     app: {{.Release.Namespace }}-cast-db
-  type: {{.Values.castDb.service.type}}
+  #type: {{.Values.castDb.service.type}}
   #clusterIP: {{.Values.castDb.service.clusterIP}}
   ports:
   - name: {{.Release.Namespace }}-cast-db

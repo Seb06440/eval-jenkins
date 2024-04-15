@@ -48,7 +48,7 @@ movieDb:
     targetPort: 5432
     clusterIP: 10.43.140.113
   volume:
-    hostPath: /mnt/movie-data
+    hostPath: /mnt/data/movie
     mountPath: /var/lib/postgresql/data/
   
 #///////////////////////////CAST SERVICE////////////////////////
@@ -84,7 +84,7 @@ castDb:
     port: 5432
     targetPort: 5432
   volume:
-    hostPath: /mnt/cast-data
+    hostPath: /mnt/data/cast
     mountPath: /var/lib/postgresql/data/
     
     

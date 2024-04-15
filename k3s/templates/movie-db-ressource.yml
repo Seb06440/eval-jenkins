@@ -71,12 +71,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{.Release.Name }}{{.Release.Namespace }}-movie-db
+  name: {{.Release.Namespace }}-movie-db
   #namespace: yaml
 spec:
   selector:
-    app: {{.Release.Name }}{{.Release.Namespace }}-movie-db
-  type: {{.Values.movieDb.service.type}}
+    app: {{.Release.Namespace }}-movie-db
+  #type: {{.Values.movieDb.service.type}}
   #clusterIP: {{.Values.movieDb.service.clusterIP}}
   ports:
   - name: {{.Release.Namespace }}-movie-db
