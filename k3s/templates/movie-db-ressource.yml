@@ -61,12 +61,13 @@ spec:
           name: {{.Release.Namespace }}-movie-pod-storage
       env:
       - name: POSTGRES_USER
-        value: admin
+        value: {{.Values.env.user}}
       - name: POSTGRES_PASSWORD
-        value: root
+        value: {{.Values.env.password}}
       - name: POSTGRES_DB
-        value: moviedb{{.Release.Namespace }}
-      
+        value: {{.Values.env.moviedb}}
+      - name: POSTGRES_HOST_AUTH_METHOD
+        value: trust
 ---
 apiVersion: v1
 kind: Service

@@ -49,7 +49,7 @@ spec:
       persistentVolumeClaim:
         claimName: {{.Release.Namespace }}-cast-pvc
     containers:
-    - name: {{.Release.Namespace }}-db
+    - name: {{.Release.Namespace }}-cast-db
       image: {{.Values.movieDb.image.repository}}:{{.Values.movieDb.image.tag}}
       imagePullPolicy: Always
 
@@ -61,12 +61,12 @@ spec:
           name: {{.Release.Namespace }}-cast-storage
       env:
       - name: POSTGRES_USER
-        value: admin
+        value: {{.Values.env.user}}
       - name: POSTGRES_PASSWORD
-        value: root
+        value: {{.Values.env.password}}
       - name: POSTGRES_DB
-        value: castdb{{.Release.Namespace }}
-      
+        value: {{.Values.env.castdb}}
+      - name: POSTGRES_HOST_AUTH_METHOD
 ---
 apiVersion: v1
 kind: Service
