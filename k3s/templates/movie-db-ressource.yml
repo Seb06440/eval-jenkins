@@ -27,6 +27,18 @@ spec:
     requests:
       storage: 2Gi
 ---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{.Release.Namespace }}-video-db-config
+  labels:
+    app: {{.Release.Namespace }}-video-db-config
+data:
+  POSTGRES_DB: {{.Values.env.videodb}}
+  POSTGRES_USER: {{.Values.env.user}}
+  POSTGRES_PASSWORD: {{.Values.env.password}}
+  PGDATA: /var/lib/postgresql/data
+---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -52,22 +64,24 @@ spec:
     containers:
     - name: {{.Release.Namespace }}-movie-container
       image: {{.Values.movieDb.image.repository}}:{{.Values.movieDb.image.tag}}
-      
+      envFrom:
+      - configMapRef:
+          name: {{.Release.Namespace }}-video-db-config
       ports:
       - containerPort: {{.Values.movieDb.service.port}}
         name: {{.Release.Namespace }}movie-db
       volumeMounts:
         - mountPath: {{.Values.movieDb.volume.mountPath}}
           name: {{.Release.Namespace }}-movie-pod-storage
-      env:
-      - name: POSTGRES_USER
-        value: {{.Values.env.user}}
-      - name: POSTGRES_PASSWORD
-        value: {{.Values.env.password}}
-      - name: POSTGRES_DB
-        value: {{.Values.env.moviedb}}
-      - name: POSTGRES_HOST_AUTH_METHOD
-        value: trust
+     # env:
+      #- name: POSTGRES_USER
+     #   value: {{.Values.env.user}}
+     # - name: POSTGRES_PASSWORD
+     #   value: {{.Values.env.password}}
+     # - name: POSTGRES_DB
+     #   value: {{.Values.env.moviedb}}
+      #- name: POSTGRES_HOST_AUTH_METHOD
+      #  value: trust
 ---
 apiVersion: v1
 kind: Service
