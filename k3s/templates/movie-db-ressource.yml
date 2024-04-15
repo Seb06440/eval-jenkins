@@ -30,11 +30,11 @@ spec:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{.Release.Namespace }}-video-db-config
+  name: {{.Release.Namespace }}-movie-db-config
   labels:
-    app: {{.Release.Namespace }}-video-db-config
+    app: {{.Release.Namespace }}-movie-db-config
 data:
-  POSTGRES_DB: {{.Values.env.videodb}}
+  POSTGRES_DB: {{.Values.env.moviedb}}
   POSTGRES_USER: {{.Values.env.user}}
   POSTGRES_PASSWORD: {{.Values.env.password}}
   PGDATA: /var/lib/postgresql/data
@@ -66,7 +66,7 @@ spec:
       image: {{.Values.movieDb.image.repository}}:{{.Values.movieDb.image.tag}}
       envFrom:
       - configMapRef:
-          name: {{.Release.Namespace }}-video-db-config
+          name: {{.Release.Namespace }}-movie-db-config
       ports:
       - containerPort: {{.Values.movieDb.service.port}}
         name: {{.Release.Namespace }}movie-db
