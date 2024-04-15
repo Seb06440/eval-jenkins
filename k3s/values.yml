@@ -91,4 +91,4 @@ env:
   user: admin
   password: password
   moviedb: moviedb{{.Release.Namespace }}
-   moviedb: castdb{{.Release.Namespace }}
+  castdb: castdb{{.Release.Namespace }}
