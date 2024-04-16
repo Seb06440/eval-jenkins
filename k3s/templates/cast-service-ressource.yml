@@ -23,7 +23,7 @@ spec:
           name: cast-http
         env:
         - name: DATABASE_URI
-          value: postgresql://admin:root@{{.Release.Namespace }}-cast-db/castdb{{.Release.Namespace }}
+          value: postgresql://datascientest:evaluation@{{.Release.Namespace }}-cast-db/castdb{{.Release.Namespace }}
      
 ---
 apiVersion: v1
