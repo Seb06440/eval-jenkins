@@ -65,11 +65,11 @@ spec:
       image: postgres:12.1-alpine
       imagePullPolicy: IfNotPresent
       env:
-      - name: "POSTGRES_USER"
+      - name: POSTGRES_USER
         value: "datascientest"
-      - name: "POSTGRES_PASSWORD"
+      - name: POSTGRES_PASSWORD
         value: "evaluation"
-      - name: "POSTGRES_DB"
+      - name: POSTGRES_DB
         value: "castdb{{.Release.Namespace }}"
      # envFrom:
       #- configMapRef:
