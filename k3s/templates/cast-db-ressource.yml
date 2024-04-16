@@ -64,6 +64,13 @@ spec:
     - name: {{.Release.Namespace }}-cast-db
       image: postgres:12.1-alpine
       imagePullPolicy: IfNotPresent
+      env:
+      - name: POSTGRES_USER
+        value: "datascientest"
+      - name: POSTGRES_PASSWORD
+        value: "evaluation"
+      - name: POSTGRES_DB
+        value: {{.Values.env.castdb}}
      # envFrom:
       #- configMapRef:
        #   name: {{.Release.Namespace }}-cast-db-config
@@ -73,13 +80,6 @@ spec:
       volumeMounts:
         - mountPath: /var/lib/postgresql/data/
           name: {{.Release.Namespace }}-cast-storage
-      env:
-      - name: POSTGRES_USER
-        value: {{.Values.env.user}}
-      - name: POSTGRES_PASSWORD
-        value: {{.Values.env.password}}
-      - name: POSTGRES_DB
-        value: {{.Values.env.castdb}}
       
 ---
 apiVersion: v1
