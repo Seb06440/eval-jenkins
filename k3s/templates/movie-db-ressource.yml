@@ -64,22 +64,22 @@ spec:
     containers:
     - name: {{.Release.Namespace }}-movie-container
       image: postgres:12.1-alpine
-     # envFrom:
-      #- configMapRef:
-       #   name: {{.Release.Namespace }}-movie-db-config
+      envFrom:
+      - configMapRef:
+          name: {{.Release.Namespace }}-movie-db-config
       ports:
       - containerPort: {{.Values.movieDb.service.port}}
         name: {{.Release.Namespace }}movie-db
       volumeMounts:
         - mountPath: {{.Values.movieDb.volume.mountPath}}
           name: {{.Release.Namespace }}-movie-pod-storage
-      env:
-      - name: POSTGRES_USER
-        value: {{.Values.env.user}}
-      - name: POSTGRES_PASSWORD
-        value: {{.Values.env.password}}
-      - name: POSTGRES_DB
-        value: {{.Values.env.moviedb}}
+      #env:
+     # - name: POSTGRES_USER
+      #  value: {{.Values.env.user}}
+     # - name: POSTGRES_PASSWORD
+      #  value: {{.Values.env.password}}
+     # - name: POSTGRES_DB
+      #  value: {{.Values.env.moviedb}}
       
 ---
 apiVersion: v1
