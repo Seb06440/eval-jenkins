@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{.Release.Namespace }}-ingress
-  #namespace: yaml
+  namespace: prod
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
     #helm.sh/hook: post-install
