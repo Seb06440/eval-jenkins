@@ -34,7 +34,7 @@ metadata:
   labels:
     app: {{.Release.Namespace }}-movie-db-config
 data:
-  POSTGRES_DB: {{.Values.env.moviedb}}
+  POSTGRES_DB: moviedb{{.Release.Namespace }}
   POSTGRES_USER: {{.Values.env.user}}
   POSTGRES_PASSWORD: {{.Values.env.password}}
   PGDATA: /var/lib/postgresql/data
