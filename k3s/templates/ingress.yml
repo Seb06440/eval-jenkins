@@ -20,13 +20,13 @@ spec:
           pathType: Prefix
           backend:
              service:
-              name: prod-cast
+              name: {{.Release.Namespace }}-cast
               port:
                 number: {{.Values.castService.service.port}}
         - path: /api/v1/movies
           pathType: Prefix
           backend:
              service:
-              name: prod-movie
+              name: {{.Release.Namespace }}-movie
               port:
                 number: {{.Values.movieService.service.port}}
