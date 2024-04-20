@@ -5,7 +5,7 @@ metadata:
   #namespace: yaml
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
-    #helm.sh/hook: post-install
+    helm.sh/hook: post-install
 spec:
   ingressClassName: traefik
   tls:
