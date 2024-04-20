@@ -5,7 +5,7 @@ metadata:
   #namespace: yaml
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
-    helm.sh/hook: post-install
+    #helm.sh/hook: post-install
 spec:
   ingressClassName: traefik
   tls:
@@ -20,13 +20,13 @@ spec:
           pathType: Prefix
           backend:
              service:
-              name: {{.Release.Namespace }}-cast
+              name: prod-cast
               port:
                 number: {{.Values.castService.service.port}}
         - path: /api/v1/movies
           pathType: Prefix
           backend:
              service:
-              name: {{.Release.Namespace }}-movie
+              name: prod-movie
               port:
                 number: {{.Values.movieService.service.port}}
