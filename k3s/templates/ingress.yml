@@ -11,9 +11,9 @@ spec:
   tls:
     - secretName: jenkins-secret
       hosts:
-        - jenkins.seb-cours-datascientest.cloudns.eu
+        - {{.Release.Namespace }}-jenkins.seb-cours-datascientest.cloudns.eu
   rules:
-  - host: jenkins.seb-cours-datascientest.cloudns.eu
+  - host: {{.Release.Namespace }}-jenkins.seb-cours-datascientest.cloudns.eu
     http:
       paths:
         - path: /api/v1/casts
