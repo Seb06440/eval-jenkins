@@ -9,7 +9,7 @@ metadata:
 spec:
   ingressClassName: traefik
   tls:
-    - secretName: jenkins-secret
+    - secretName: {{.Release.Namespace }}-jenkins-secret
       hosts:
         - {{.Release.Namespace }}-jenkins.seb-cours-datascientest.cloudns.eu
   rules:
