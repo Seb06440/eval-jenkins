@@ -25,7 +25,7 @@ spec:
         - name: DATABASE_URI
           value: postgresql://datascientest:evaluation@{{.Release.Namespace }}-movie-db/moviedb{{.Release.Namespace }}
         - name: CAST_SERVICE_HOST_URL
-          value: "https://jenkins.seb-cours-datascientest.cloudns.eu/api/v1/casts/"
+          value: https://{{.Release.Namespace }}-jenkins.seb-cours-datascientest.cloudns.eu/api/v1/casts/
 ---        
 apiVersion: v1
 kind: Service
